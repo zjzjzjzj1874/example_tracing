@@ -1,0 +1,44 @@
+version: '3.0'
+services:
+  elasticsearch-jaeger:
+    container_name: elasticsearch-jaeger
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4000M
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    user: root
+    privileged: true
+    volumes:
+      - ./es-jaeger/data/:/usr/share/elasticsearch/data
+      - ./elasticsearch-jaeger.yml:/usr/share/elasticsearch/config/elasticsearch.yml # 挂载kibana的文件
+      - ./es-jaeger/logs/:/usr/share/elasticsearch/logs
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    restart: always
+    environment:
+      - discovery.type=single-node
+    networks:
+      - elk
+    logging:
+      options:
+        max-size: 100m
+
+  kibana-jaeger:
+    container_name: kibana-jaeger
+    image: docker.elastic.co/kibana/kibana:7.9.3
+    depends_on: [ 'elasticsearch-jaeger' ]
+    volumes:
+      - ./kibana-jaeger.yml:/usr/share/kibana/config/kibana.yml # 挂载kibana的文件
+    environment:
+      - ELASTICSEARCH_HOSTS=http://locaohost:9200 # 替换局域网的localhost
+    ports:
+      - "5601:5601"
+    restart: always
+    networks:
+      - elk
+
+networks:
+  elk:

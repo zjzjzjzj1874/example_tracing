@@ -1,0 +1,22 @@
+version: '3.0'
+
+services:
+  otel-collector:
+    image: otel/opentelemetry-collector:0.72.0
+    container_name: otel-col
+    command: [--config=/etc/otel-collector-config.yml]
+    volumes:
+      - ./otel-collector-config.yml:/etc/otel-collector-config.yml
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1000M
+    ports:
+      - "4317:4317" # OTLP gRPC receiver
+      - "4318:4318" # OTLP http receiver
+      - "1888:1888" # pprof extension
+      - "8888:8888" # Prometheus metrics exposed by the collector
+      - "8889:8889" # Prometheus exporter metrics
+      - "13133:13133" # health_check extension
+      - "55679:55679" # zpages extension

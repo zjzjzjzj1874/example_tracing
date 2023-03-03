@@ -1,0 +1,9 @@
+auth:
+  # Enable authentication
+  enabled: true
+  # Select authentication strategy (e.g., basic, jwt, oauth2)
+  strategy: basic
+  # Set the username and password for basic authentication
+  basic:
+    username: jaeger
+    password: 123456

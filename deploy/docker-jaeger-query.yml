@@ -1,0 +1,27 @@
+version: '3.0'
+services:
+  jaeger-query:
+    container_name: jaeger-query
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1000M
+    image: jaegertracing/jaeger-query:1.42
+    user: root
+    privileged: true
+    ports:
+      - "16685:16685"
+      - "16686:16686"
+      - "16687:16687"
+    volumes:
+      - ./jaeger-conf.yaml:/etc/jaeger/jaeger.yaml
+    environment:
+      - "SPAN_STORAGE_TYPE=elasticsearch"
+      - "ES_SERVER_URLS=http://localhost:9200"
+      - "ES_USERNAME=elastic"
+      - "ES_PASSWORD=changme"
+    restart: always
+
+# 启动命令: docker-compose -f docker-jaeger-query.yml up -d
+# 单条命令启动: docker run -d --name=jaeger-query --link elasticsearch2 -p 16686:16686 -p 16687:16687 -e SPAN_STORAGE_TYPE=elasticsearch -e ES_SERVER_URLS=http://localhost:9200 jaegertracing/jaeger-query:1.42

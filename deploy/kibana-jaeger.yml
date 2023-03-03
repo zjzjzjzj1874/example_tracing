@@ -1,0 +1,18 @@
+#
+# ** THIS IS AN AUTO-GENERATED FILE **
+#
+
+# Default Kibana configuration for docker target
+#kibana_system.username: "kibana"
+#kibana_system.password: "trACiBb679at9Nwq"
+#xpack.security.encryptionKey: "MNjsGEH3Y0BlJmgiuZEA4kOs493XEgnEZBqZyWArAzeaM3OqFOmgWvhWfPynQXhM"
+server.name: kibana
+server.host: "0"
+elasticsearch.hosts: [ "http://elasticsearch:9210" ]
+monitoring.ui.container.elasticsearch.enabled: true
+
+xpack.ingestManager.enabled: true
+xpack.ingestManager.fleet.tlsCheckDisabled: true
+xpack.security.enabled: true
+elasticsearch.username: "elastic"
+elasticsearch.password: "changeme"
