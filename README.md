@@ -14,3 +14,6 @@ Please make sure you have docker-compose in your compute.
 - run go server && push your data into this.
   - `go run .`
 - finally,you will see your test data in http://localhost:16686.
+
+### Note
+However,you need change `localhost` in those files into `your inner domain ip`,otherwise you cannot visit these middlewares. 
